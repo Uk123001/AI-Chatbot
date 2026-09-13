@@ -1,0 +1,18 @@
+# Alternative host: fly.io. Deploy with `fly launch` then `fly deploy`
+# (fly.io will detect the Dockerfile automatically).
+app = "ai-booking-assistant"
+primary_region = "sin"
+
+[build]
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512

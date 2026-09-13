@@ -1,0 +1,40 @@
+# Render "Blueprint" — connect this repo at https://dashboard.render.com/blueprints
+# and Render will read this file to provision the service automatically.
+services:
+  - type: web
+    name: ai-booking-assistant
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: LLM_PROVIDER
+        value: groq
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.1-8b-instant
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        value: sqlite:///./data/booking.db
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: ADMIN_KEY
+        sync: false
+      - key: BUSINESS_NAME
+        value: Aster Appointments
+      - key: BOOKING_DOMAIN
+        value: salon and spa services
+      - key: ALLOWED_ORIGINS
+        value: "*"

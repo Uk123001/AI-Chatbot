@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Dashboard — Aster Appointments</title>
+<link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body class="admin-body">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">✦</span>
+        <span class="brand-name">Aster Appointments — Admin</span>
+      </div>
+      <a class="admin-link" href="/">← Back to chat</a>
+    </header>
+
+    <main class="admin-main">
+      <div id="gate" class="card gate-card">
+        <h2>Admin access</h2>
+        <p class="muted">Enter the admin key to view bookings.</p>
+        <div class="gate-row">
+          <input id="admin-key" type="password" placeholder="Admin key" />
+          <button id="gate-btn">Unlock</button>
+        </div>
+        <p id="gate-error" class="error-text" hidden>Incorrect key. Try again.</p>
+      </div>
+
+      <div id="dashboard" class="dashboard" hidden>
+        <div class="dash-toolbar card">
+          <input id="search-input" type="text" placeholder="Search by name or email" />
+          <input id="date-input" type="date" />
+          <button id="filter-btn">Filter</button>
+          <button id="reset-btn" class="secondary">Reset</button>
+          <button id="export-btn" class="secondary">Export CSV</button>
+        </div>
+
+        <div class="card table-card">
+          <table id="bookings-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Booking</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="bookings-body"></tbody>
+          </table>
+          <p id="empty-state" class="muted" hidden>No bookings yet.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>

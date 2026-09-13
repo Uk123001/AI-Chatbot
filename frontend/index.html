@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aster Appointments — Booking Assistant</title>
+<link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">✦</span>
+        <span class="brand-name">Aster Appointments</span>
+      </div>
+      <a class="admin-link" href="/admin">Admin dashboard →</a>
+    </header>
+
+    <main class="layout">
+      <section class="chat-panel">
+        <div class="chat-header">
+          <h1>Book something, ask anything.</h1>
+          <p>Tell me what you'd like to schedule, or ask a question about a document you've shared below.</p>
+        </div>
+
+        <div id="chat-log" class="chat-log" aria-live="polite">
+          <div class="msg bot">
+            <div class="bubble">
+              Hi, I'm your booking assistant. I can help you reserve a slot, or answer
+              questions about any PDF you upload. What can I do for you today?
+            </div>
+          </div>
+        </div>
+
+        <div id="status-line" class="status-line" hidden></div>
+
+        <form id="chat-form" class="chat-input-row">
+          <input
+            id="chat-input"
+            type="text"
+            autocomplete="off"
+            placeholder="e.g. Book a haircut for Saturday at 3pm"
+            aria-label="Message"
+          />
+          <button type="submit" id="send-btn">Send</button>
+        </form>
+      </section>
+
+      <aside class="side-panel">
+        <div class="card">
+          <h2>Reference documents</h2>
+          <p class="muted">Upload a PDF (policy, menu, brochure) and I'll answer questions from it.</p>
+          <label class="upload-drop" for="pdf-input">
+            <span id="upload-label">Choose a PDF or drag it here</span>
+            <input id="pdf-input" type="file" accept="application/pdf" hidden />
+          </label>
+          <ul id="doc-list" class="doc-list"></ul>
+        </div>
+
+        <div class="card">
+          <h2>How this works</h2>
+          <ol class="how-list">
+            <li>Say what you'd like to book — I'll ask for anything I'm missing.</li>
+            <li>I'll summarize the details and ask you to confirm.</li>
+            <li>Once confirmed, I save it and email you a confirmation.</li>
+          </ol>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="/static/js/chat.js"></script>
+</body>
+</html>
