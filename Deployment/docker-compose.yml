@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # Streamlit App
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-booking-assistant
+    ports:
+      - "8501:8501"
+    environment:
+      # LLM Configuration
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - LLM_PROVIDER=${LLM_PROVIDER:-groq}
+      - LLM_MODEL=${LLM_MODEL:-mixtral-8x7b-32768}
+      
+      # Database
+      - DB_PATH=/app/data/bookings.db
+      - DATABASE_URL=sqlite:////app/data/bookings.db
+      
+      # Email
+      - SENDER_EMAIL=${SENDER_EMAIL}
+      - SENDER_PASSWORD=${SENDER_PASSWORD}
+      - SMTP_SERVER=${SMTP_SERVER:-smtp.gmail.com}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      
+      # Embeddings
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+      - VECTOR_STORE_PATH=/app/data/vector_store
+      
+      # Admin
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      
+      # Features
+      - ENABLE_RAG=true
+      - ENABLE_EMAIL=true
+      - ENABLE_ADMIN_DASHBOARD=true
+    
+    volumes:
+      - ./data:/app/data
+      - ./vector_store:/app/vector_store
+    
+    networks:
+      - app-network
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  # Optional: PostgreSQL Database (replace SQLite)
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: booking-db
+  #   environment:
+  #     - POSTGRES_USER=${DB_USER:-booking_user}
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD}
+  #     - POSTGRES_DB=${DB_NAME:-bookings}
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   networks:
+  #     - app-network
+  #   restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
